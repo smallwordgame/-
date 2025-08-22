@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>Small Word Game</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="styles.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<linkhref="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  </head>
+  <body>
+        <audio id="woosh" loop>
+            <source src="woosh.mp3" type="audio/mpeg">
+        </audio>
+    <main>
+        <div id="MAD">
+            <h2 id="BIGc">team BIG</h2>
+            <section class="pp" id="Mred">
+                <h3 class="LT">-1</h3>
+            </section>
+            <section class="pp" id="Myellow">
+                <h3 class="LT">+1</h3>
+            </section>
+            <section class="pp" id="Mgreen">
+                <h3 class="LT">+3</h3>
+            </section>
+        </div>
+        <div>
+            <h4>null</h4>
+        </div>
+        <div id="middle">
+            <h1>Small Word Game</h1>
+            <section id="card">
+                <figure class="cards" id="OnePoint">
+                    <p id="one">placeholder</p>
+                </figure>
+                <figure class="cards" id="ThreePoint">
+                    <p id="three">placeholder</p>
+                </figure>
+            </section>
+            <button id="skip">skip</button>
+            <section id="Tcontrol">
+                <button id="start">start</button>
+                <button id="reset">reset</button>
+            </section>
+            <section id="NextSection">
+                <p id="time">timer</p>
+                <button id="Next">next team</button>
+            </section>
+        </div>
+        <div id="GLAD">
+            <h2 id="ROCKc">team ROCK</h2>
+            <section class="pp" id="Gred">
+                <h3 class="RT">-1</h3>
+            </section>
+            <section class="pp" id="Gyellow">
+                <h3 class="RT">+1</h3>
+            </section>
+            <section class="pp" id="Ggreen">
+                <h3 class="RT">+3</h3>
+            </section>
+        </div>
+
+    </main>
+    <script src="GAMEDATA.js"></script>
+    <script src="script.js"></script>
+  </body>
