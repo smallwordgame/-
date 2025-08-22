@@ -5,23 +5,33 @@
 body {
     margin: 0;
     font-family: "Mulish", Arial, sans-serif;
+    height: 100vh;
 }
 
 main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    height: 100vh;
 }
 
 #middle {
     height: 100vh;
     background-color: lightgray;
     width: 34vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-y: auto; 
 }
 
-#middle {
+#pannel {
+    height: 100vh;
+    background-color: lightgray;
+    width: 34vw;
     position: fixed;
-    top: 50%; /* center vertically */
-    left: 50%; /* center horizontally */
+    top: 50%;
+    left: 17%;
     transform: translate(-50%, -50%);
     overflow-y: auto; 
 }
@@ -209,4 +219,36 @@ h3 {
     z-index: 3;
     position: absolute;
     margin-left: 10px;
+}
+
+a {
+    background-color: grey;
+    border-radius: 35px;
+    width: 50vw;
+    height: 25vh;
+    text-align: center;
+    margin: 2px;
+    font-size: xx-large;
+    padding-top: 10vh;
+    text-decoration: none;
+    color: white;
+}
+
+#links {
+    display: flex;
+    flex-direction: column;
+    margin: 30vh auto;
+}
+
+#together {
+    grid-column: 2 / 4;
+}
+
+#Scount {
+    background-color: orange;
+    border-radius: 5vw;
+    width: 20vw;
+    color: white;
+    font-size: xx-large;
+    text-align: center;   
 }
