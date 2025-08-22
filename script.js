@@ -15,8 +15,8 @@ SELECT = null;
 POINTSM = [];
 POINTSG = [];
 
-const woosh = document.getElementById("woosh"); 
-woosh.volume = 0.1;
+// const woosh = document.getElementById("woosh"); 
+// woosh.volume = 0.1;
 
 start.addEventListener("click", function(){
     if(PAUSE){
@@ -24,12 +24,12 @@ start.addEventListener("click", function(){
         start.innerHTML = "pause";
         start.style.color = "black";
         PAUSE = false;
-        woosh.play();
+        // woosh.play();
     }
     else{
         startToStart();
         PAUSE = true;
-        woosh.pause();
+        // woosh.pause();
     }
     if(FIRST){
         timer();
@@ -62,6 +62,8 @@ reset.addEventListener("click", function(){
     if(PAUSE){
         TIME = 90000;
         showT();
+        FIRST = true;
+        PAUSE = true;
     }
 });
 
@@ -324,7 +326,7 @@ function showT(){
     else{
         time.innerHTML = String(TIME).substr(0, 2);
     }
-    woosh.volume = TIME / 90000;
+    // woosh.volume = TIME / 90000;
 }
 
 function placeholder(){
