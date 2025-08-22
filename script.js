@@ -88,7 +88,6 @@ Next.addEventListener("click", function(){
     switchTeam();
     TIME = 90000;
     showT();
-    PAUSE = true;
     startToStart();
     FIRST = true;
     PAUSE = true;
@@ -309,7 +308,7 @@ function count(){
     GYcount = Gyellow.childElementCount;
     GGcount = Ggreen.childElementCount;
     Gcount = (-1 * (GRcount - 1)) + (1 * (GYcount - 1)) + (3 * (GGcount - 1));
-    ROCKc.innerHTML = ("team ROCK " + Gcount);
+    ROCKc.innerHTML = (Gcount + " team ROCK");
     // console.log("GLAD: " + Gcount); 
 }
 
