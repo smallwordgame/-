@@ -70,6 +70,7 @@ function timer(){
             startToStart();
             TIME = 90000;
             PAUSE = true;
+            FIRST = true;
             showT();
         }
         else{
