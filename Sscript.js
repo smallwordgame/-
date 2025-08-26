@@ -285,7 +285,7 @@ function threePressed(){
 }
 
 function minusPressed(){
-    if(FIRST > 0FIRST){
+    if(FIRST > FIRST){
         if(one.innerHTML != "placeholder"){
             place(Gred, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
         }
