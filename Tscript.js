@@ -2,7 +2,7 @@ TIME = 90000;
 PAUSE = true;
 RATE = 1;
 CARDID = 0;
-FIRST = true;
+FIRST = 0;
 if(randomInt(1,2) == 1){
     TEAM = "MAD";
 }
@@ -31,38 +31,26 @@ start.addEventListener("click", function(){
         PAUSE = true;
         // woosh.pause();
     }
-    if(FIRST){
+    if(FIRST == 0){
         timer();
         find();
+        FIRST += 1;
     }
-    FIRST = false;
+    if(FIRST == 1){
+        find();
+        FIRST += 1;
+    }
 });
 
 skip.addEventListener("click", function(){
-    if(!FIRST){
-        if(one.innerHTML != "placeholder"){
-            if(TEAM == "MAD"){
-                place(Mred, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
-            }
-            else{
-                place(Gred, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
-            } 
-        }
-        if(TIME == 90000){
-            placeholder();
-        }
-        else{
-            find();
-        }
-        count();
-    }
+    minusPressed();
 });
 
 reset.addEventListener("click", function(){
     if(PAUSE){
         TIME = 90000;
         showT();
-        FIRST = true;
+        FIRST = 1;
         PAUSE = true;
     }
 });
@@ -70,19 +58,18 @@ reset.addEventListener("click", function(){
 function timer(){
     if(!PAUSE){
         showT();
-        setTimeout(update, (RATE * 1000));
         if(TIME == 0){
             startToStart();
             TIME = 90000;
             PAUSE = true;
-            FIRST = true;
             showT();
+            FIRST += 1;
         }
         else{
             TIME -= 1000;
         }
-
     }
+    setTimeout(update, (RATE * 1000));
 }
 
 Next.addEventListener("click", function(){
@@ -90,7 +77,7 @@ Next.addEventListener("click", function(){
     TIME = 90000;
     showT();
     startToStart();
-    FIRST = true;
+    FIRST = 1;
     PAUSE = true;
 });
 
@@ -112,64 +99,27 @@ function find(){
     }
 }
 
-OnePoint.addEventListener("click", function(){
-    if(!FIRST){
-        if(isIn == false){
-            getCard();
-        }
-        if(one.innerHTML != "placeholder"){
-            if(TEAM == "MAD"){
-                if(isIn(GAMEDATA[SELECT][1], POINTSM) == false){
-                    POINTSM.push(GAMEDATA[SELECT][0], GAMEDATA[SELECT][1]);
-                    place(Myellow, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
-                }
-            }
-            else
-            {
-                if(isIn(GAMEDATA[SELECT][3], POINTSM) == false){
-                    POINTSM.push(GAMEDATA[SELECT][0], GAMEDATA[SELECT][1]);
-                    place(Gyellow, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
-                }
-            }
-        }
-        if(TIME == 90000){
-            placeholder();
-        }
-        else{
-            find();
-        }
-        count();
+document.addEventListener('keydown', function handler(event) {
+    if (event.key === '1') {
+      console.log('The "1" key was pressed once!');
+        onePressed();
+    }
+    if (event.key === '3') {
+        console.log('The "3" key was pressed once!');
+        threePressed();
+    }
+    if (event.key === '-') {
+        console.log('The "-" key was pressed once!');
+        minusPressed();
     }
 });
 
+OnePoint.addEventListener("click", function(){
+    onePressed();
+});
+
 ThreePoint.addEventListener("click", function(){
-    if(!FIRST){
-        if(isIn == false){
-            getCard();
-        }
-        if(one.innerHTML != "placeholder"){
-            if(TEAM == "MAD"){
-                if(isIn(GAMEDATA[SELECT][1], POINTSM) == false){
-                    POINTSM.push(GAMEDATA[SELECT][2], GAMEDATA[SELECT][3]);
-                    place(Mgreen, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
-                }
-            }
-            else
-            {
-                if(isIn(GAMEDATA[SELECT][3], POINTSM) == false){
-                    POINTSM.push(GAMEDATA[SELECT][2], GAMEDATA[SELECT][3]);
-                    place(Ggreen, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
-                }
-            }
-        }
-        if(TIME == 90000){
-            placeholder();
-        }
-        else{
-            find();
-        }
-        count();
-    }
+    threePressed();
 });
 
 function place(whereTo, topC, bottomC){
@@ -190,17 +140,29 @@ function place(whereTo, topC, bottomC){
         div = document.createElement('div');
             div.setAttribute('data-style', 'contentb');
             but = document.createElement('button');
-                but.textContent = '△';
-                but.setAttribute("onclick", "upF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                but.textContent = '-1';
+                but.setAttribute("onclick", "redF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                but.style.backgroundColor = "rgb(255, 98, 98)";
+                but.classList.add("but");
             div.appendChild(but);
             but = document.createElement('button');
-                but.textContent = '▽';
-                but.setAttribute("onclick", "downF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                but.textContent = '+1';
+                but.setAttribute("onclick", "yellowF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                but.style.backgroundColor = "rgb(255, 255, 109)";
+                but.classList.add("but");
             div.appendChild(but);
             but = document.createElement('button');
-                but.textContent = 'x';
-                but.setAttribute("onclick", "remove(" + CARDID + ")");
-        div.appendChild(but);
+                but.textContent = '+3';
+                but.setAttribute("onclick", "greenF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                but.style.backgroundColor = "rgb(120, 255, 120)";
+                but.classList.add("but");
+            div.appendChild(but);
+            but = document.createElement('button');
+                    but.textContent = 'x';
+                    but.setAttribute("onclick", "remove(" + CARDID + ")");
+                    but.style.backgroundColor = "red";
+                    but.classList.add("but");
+            div.appendChild(but);
         fig.appendChild(div);
     fig.style.backgroundColor = "grey";
     // console.log(whereTo);
@@ -221,31 +183,18 @@ function update(){
     timer();
 }
 
-function upF(oldid, whereIs, topC, bottomC) {
-    if(whereIs.includes('red')){
-        whereTo = "green"
-    }
-    if(whereIs.includes('yellow')){
-        whereTo = "red"
-    }
-    if(whereIs.includes('green')){
-        whereTo = "yellow"
-    }
-    place(whereIs[0] + whereTo, topC, bottomC);
+function redF(oldid, whereIs, topC, bottomC) {
+    place(whereIs[0] + "red", topC, bottomC);
     remove(oldid);
 }
 
-function downF(oldid, whereIs, topC, bottomC) {
-    if(whereIs.includes('red')){
-        whereTo = "yellow"
-    }
-    if(whereIs.includes('yellow')){
-        whereTo = "green"
-    }
-    if(whereIs.includes('green')){
-        whereTo = "red"
-    }
-    place(whereIs[0] + whereTo, topC, bottomC);
+function yellowF(oldid, whereIs, topC, bottomC) {
+    place(whereIs[0] + "yellow", topC, bottomC);
+    remove(oldid);
+}
+
+function greenF(oldid, whereIs, topC, bottomC) {
+    place(whereIs[0] + "green", topC, bottomC);
     remove(oldid);
 }
 
@@ -256,15 +205,6 @@ function remove(oldid){
     }
     count();
 }
-
-// function isIn(item, list) {
-//     for (let i = 0; i < list.length; i++) {
-//         if (list[i].includes(item) || item.includes(list[i])) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
 
 function isIn(item, list) {
     return list.some(word => String(word).includes(item) || item.includes(String(word)));
@@ -326,10 +266,123 @@ function showT(){
     else{
         time.innerHTML = String(TIME).substr(0, 2);
     }
-    // woosh.volume = TIME / 90000;
 }
 
 function placeholder(){
     one.innerHTML = "placeholder";
     three.innerHTML = "placeholder";
 }
+
+function onePressed(){
+    if(FIRST > 0){
+        if(isIn == false){
+            getCard();
+        }
+        if(one.innerHTML != "placeholder"){
+            if(TEAM == "MAD"){
+                if(isIn(GAMEDATA[SELECT][1], POINTSM) == false){
+                    POINTSM.push(GAMEDATA[SELECT][0], GAMEDATA[SELECT][1]);
+                    place(Myellow, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
+                }
+            }
+            else
+            {
+                if(isIn(GAMEDATA[SELECT][3], POINTSM) == false){
+                    POINTSM.push(GAMEDATA[SELECT][0], GAMEDATA[SELECT][1]);
+                    place(Gyellow, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
+                }
+            }
+        }
+        if(TIME == 90000){
+            placeholder();
+        }
+        else{
+            find();
+        }
+        count();
+    }
+}
+
+function threePressed(){
+    if(FIRST > 0){
+        if(isIn == false){
+            getCard();
+        }
+        if(one.innerHTML != "placeholder"){
+            if(TEAM == "MAD"){
+                if(isIn(GAMEDATA[SELECT][1], POINTSM) == false){
+                    POINTSM.push(GAMEDATA[SELECT][2], GAMEDATA[SELECT][3]);
+                    place(Mgreen, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
+                }
+            }
+            else
+            {
+                if(isIn(GAMEDATA[SELECT][3], POINTSM) == false){
+                    POINTSM.push(GAMEDATA[SELECT][2], GAMEDATA[SELECT][3]);
+                    place(Ggreen, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
+                }
+            }
+        }
+        if(TIME == 90000){
+            placeholder();
+        }
+        else{
+            find();
+        }
+        count();
+    }
+}
+
+function minusPressed(){
+    if(FIRST > 0){
+        if(one.innerHTML != "placeholder"){
+            if(TEAM == "MAD"){
+                place(Mred, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
+            }
+            else{
+                place(Gred, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
+            } 
+        }
+        if(TIME == 90000){
+            placeholder();
+        }
+        find();
+        count();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const pieCanvas = document.getElementById("pieTimer");
+    const pieCtx = pieCanvas.getContext("2d");
+
+    function drawPieTimer() {
+        const total = 90000;
+        const elapsed = total - TIME;
+        const fraction = elapsed / total;
+
+        const startAngle = -Math.PI / 2;
+        const endAngle = startAngle + (fraction * 2 * Math.PI);
+
+        pieCtx.clearRect(0, 0, pieCanvas.width, pieCanvas.height);
+
+        //back
+        pieCtx.beginPath();
+        pieCtx.arc(pieCanvas.width / 2, pieCanvas.height / 2, 99, 0, 2 * Math.PI);
+        pieCtx.fillStyle = "grey";
+        pieCtx.fill();
+
+        //drawn over portion
+        pieCtx.beginPath();
+        pieCtx.moveTo(pieCanvas.width / 2, pieCanvas.height / 2);
+        pieCtx.arc(pieCanvas.width / 2, pieCanvas.height / 2, 100, startAngle, endAngle, false);
+        pieCtx.closePath();
+        pieCtx.fillStyle = "lightgrey";
+        pieCtx.fill();
+    }
+
+    const originalShowT = window.showT;
+    window.showT = function() {
+        if (originalShowT) originalShowT();
+        drawPieTimer();
+    };
+});

@@ -93,6 +93,7 @@ section {
 }
 
 #time {
+    margin: 0;
     text-align: center;
     font-size: xx-large;
 }
@@ -212,6 +213,7 @@ h2 {
     height: fit-content;
     padding: 10px;
     width: 150;
+    font-size: x-small;
 }
 
 h3 {
@@ -244,11 +246,28 @@ a {
     grid-column: 2 / 4;
 }
 
-#Scount {
+#GenralC {
     background-color: orange;
-    border-radius: 5vw;
-    width: 20vw;
+    width: 200px;
+    height: fit-content;
+    border-radius: 25px;
     color: white;
     font-size: xx-large;
-    text-align: center;   
+    text-align: left;
+    padding: 5px;   
+}
+
+.but {
+    border-radius: 5px;
+    border: 0;
+    margin: 1px;
+}
+
+span{
+    border: 1px solid black;
+    background-color: grey;
+}
+
+canvas {
+    margin-bottom: 5px;
 }
