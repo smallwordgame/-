@@ -13,7 +13,6 @@
   <body>
         <main>
             <div id="pannel">
-                <h1>Small Word Game</h1>
                 <section id="card">
                     <figure class="cards" id="OnePoint">
                         <p id="one">placeholder</p>
@@ -29,24 +28,28 @@
                 </section>
                 <section id="NextSection">
                     <p id="time">timer</p>
-                    <canvas id="pieTimer" width="200" height="200"></canvas>
+                    <canvas id="pieTimer" width="180" height="180"></canvas>
                     <p id="GenralC">points =</p>
                 </section>
                 <ul>
-                    <li>press the <span>&nbsp- </span>&nbspkey to add card to minus one point section</li>
-                    <li>press the <span> 1 </span>&nbspkey to add card to one point section</li>
-                    <li>press the <span> 3 </span>&nbspkey to add card to three point section</li>
+                    <li>press the <span>&nbsp- </span>&nbspkey to add card to red section</li>
+                    <li>press the <span> 1 </span>&nbspkey to add card to yellow section</li>
+                    <li>press the <span> 3 </span>&nbspkey to add card to green section</li>
                 </ul>
             </div>
             <div id="together">
+                <h2>team SMALL</h2>
                 <section class="pp" id="Gred">
                     <h3 class="LT">-1</h3>
+                    <button id="RredE" class="expandR">expand</button>
                 </section>
                 <section class="pp" id="Gyellow">
                     <h3 class="LT">+1</h3>
+                    <button id="RyellowE" class="expandR">expand</button>
                 </section>
                 <section class="pp" id="Ggreen">
                     <h3 class="LT">+3</h3>
+                    <button id="RyellowE" class="expandR">expand</button>
                 </section>
             </div>
         </main>

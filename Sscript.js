@@ -285,7 +285,7 @@ function threePressed(){
 }
 
 function minusPressed(){
-    if(FIRST > FIRST){
+    if(FIRST > 0){
         if(one.innerHTML != "placeholder"){
             place(Gred, GAMEDATA[SELECT][1], GAMEDATA[SELECT][3]);
         }
@@ -313,14 +313,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //back
         pieCtx.beginPath();
-        pieCtx.arc(pieCanvas.width / 2, pieCanvas.height / 2, 99, 0, 2 * Math.PI);
+        pieCtx.arc(pieCanvas.width / 2, pieCanvas.height / 2, 89, 0, 2 * Math.PI);
         pieCtx.fillStyle = "grey";
         pieCtx.fill();
 
         //drawn over portion
         pieCtx.beginPath();
         pieCtx.moveTo(pieCanvas.width / 2, pieCanvas.height / 2);
-        pieCtx.arc(pieCanvas.width / 2, pieCanvas.height / 2, 100, startAngle, endAngle, false);
+        pieCtx.arc(pieCanvas.width / 2, pieCanvas.height / 2, 90, startAngle, endAngle, false);
         pieCtx.closePath();
         pieCtx.fillStyle = "lightgrey";
         pieCtx.fill();
