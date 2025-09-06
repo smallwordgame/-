@@ -3,13 +3,19 @@ PAUSE = true;
 RATE = 1;
 CARDID = 0;
 FIRST = 0;
+FIGURES = [[]];
+TOTAL = 0;
+EXPAND = [
+    ["Gred", false],
+    ["Gyellow", false],
+    ["Ggreen", false]
+]
 if(randomInt(1,2) == 1){
     TEAM = "MAD";
 }
 else{
     TEAM = "GLAD";
 }
-// switchTeam();
 DISCARD = [];
 SELECT = null;
 POINTSM = [];
@@ -21,7 +27,8 @@ POINTSG = [];
 start.addEventListener("click", function(){
     if(PAUSE){
         start.style.backgroundColor = "yellow";
-        start.innerHTML = "pause";
+        startL.innerHTML = "pause";
+        startS.innerHTML = "⏸";
         start.style.color = "black";
         PAUSE = false;
         // woosh.play();
@@ -38,6 +45,7 @@ start.addEventListener("click", function(){
     }
     if(FIRST == 1){
         find();
+        FIRST += 1;
     }
 });
 
@@ -61,8 +69,8 @@ function timer(){
             startToStart();
             TIME = 90000;
             PAUSE = true;
-            FIRST = 1;
             showT();
+            FIRST += 1;
         }
         else{
             TIME -= 1000;
@@ -115,49 +123,77 @@ ThreePoint.addEventListener("click", function(){
 function place(whereTo, topC, bottomC){
     if(typeof whereTo === 'string') whereTo = document.getElementById(whereTo);
     CARDID ++
-    fig = document.createElement('figure');
-        fig.id = CARDID;
-        fig.classList.add("points");
-        div = document.createElement('div');
-            div.setAttribute('data-style', 'content');
+    figgg = document.createElement('figure');
+        figgg.id = CARDID;
+        if(EXPAND[findSection(whereTo.id)][1]){
+            figgg.classList.add("outterH");
+        }
+        else{
+            figgg.classList.add("outter");
+        }
+        p = document.createElement('p');
+        p.innerHTML = "&nbsp";
+        figgg.appendChild(p);
+        figg = document.createElement('figure');
+            figg.id = CARDID + "out";
+            if(EXPAND[findSection(whereTo.id)][1]){
+                figg.classList.add("outH");
+            }
+            else{
+                figg.classList.add("out");
+            }
             p = document.createElement('p');
-                p.textContent = topC;
-            div.appendChild(p);
-            p = document.createElement('p');
-                p.textContent = bottomC;
-            div.appendChild(p);
-        fig.appendChild(div);
-        div = document.createElement('div');
-            div.setAttribute('data-style', 'contentb');
-            but = document.createElement('button');
-                but.textContent = '-1';
-                but.setAttribute("onclick", "redF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
-                but.style.backgroundColor = "rgb(255, 98, 98)";
-                but.classList.add("but");
-            div.appendChild(but);
-            but = document.createElement('button');
-                but.textContent = '+1';
-                but.setAttribute("onclick", "yellowF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
-                but.style.backgroundColor = "rgb(255, 255, 109)";
-                but.classList.add("but");
-            div.appendChild(but);
-            but = document.createElement('button');
-                but.textContent = '+3';
-                but.setAttribute("onclick", "greenF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
-                but.style.backgroundColor = "rgb(120, 255, 120)";
-                but.classList.add("but");
-            div.appendChild(but);
-            but = document.createElement('button');
-                    but.textContent = 'x';
-                    but.setAttribute("onclick", "remove(" + CARDID + ")");
-                    but.style.backgroundColor = "red";
-                    but.classList.add("but");
-            div.appendChild(but);
-        fig.appendChild(div);
-    fig.style.backgroundColor = "grey";
+            p.innerHTML = "&nbsp";
+            figg.appendChild(p);
+            fig = document.createElement('figure');
+                fig.id = CARDID;
+                fig.classList.add("points");
+                div = document.createElement('div');
+                    div.setAttribute('data-style', 'content');
+                    p = document.createElement('p');
+                        p.textContent = topC;
+                    div.appendChild(p);
+                    p = document.createElement('p');
+                        p.textContent = bottomC;
+                    div.appendChild(p);
+                fig.appendChild(div);
+                div = document.createElement('div');
+                    div.setAttribute('data-style', 'contentb');
+                    but = document.createElement('button');
+                        but.textContent = '-1';
+                        but.setAttribute("onclick", "redF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                        but.style.backgroundColor = "rgb(255, 98, 98)";
+                        but.classList.add("but");
+                    div.appendChild(but);
+                    but = document.createElement('button');
+                        but.textContent = '+1';
+                        but.setAttribute("onclick", "yellowF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                        but.style.backgroundColor = "rgb(255, 255, 109)";
+                        but.classList.add("but");
+                    div.appendChild(but);
+                    but = document.createElement('button');
+                        but.textContent = '+3';
+                        but.setAttribute("onclick", "greenF('" + CARDID + "', '" + whereTo.id + "', '" + escapeQuotes(topC) + "', '" + escapeQuotes(bottomC) + "')");
+                        but.style.backgroundColor = "rgb(120, 255, 120)";
+                        but.classList.add("but");
+                    div.appendChild(but);
+                    but = document.createElement('button');
+                            but.textContent = 'x';
+                            but.setAttribute("onclick", "remove(" + CARDID + ")");
+                            but.style.backgroundColor = "red";
+                            but.classList.add("but");
+                    div.appendChild(but);
+                fig.appendChild(div);
+            figg.appendChild(fig);
+        figgg.appendChild(figg);
     // console.log(whereTo);
     // console.log(typeof whereTo);
-    whereTo.appendChild(fig);
+    whereTo.appendChild(figgg);
+    setsetFigures();
+    if(EXPAND[findSection(whereTo.id)][1] == false){
+        hide(whereTo);
+    }
+
 }
 
 function escapeQuotes(str) {
@@ -173,31 +209,18 @@ function update(){
     timer();
 }
 
-function upF(oldid, whereIs, topC, bottomC) {
-    if(whereIs.includes('red')){
-        whereTo = "green"
-    }
-    if(whereIs.includes('yellow')){
-        whereTo = "red"
-    }
-    if(whereIs.includes('green')){
-        whereTo = "yellow"
-    }
-    place(whereIs[0] + whereTo, topC, bottomC);
+function redF(oldid, whereIs, topC, bottomC) {
+    place(whereIs[0] + "red", topC, bottomC);
     remove(oldid);
 }
 
-function downF(oldid, whereIs, topC, bottomC) {
-    if(whereIs.includes('red')){
-        whereTo = "yellow"
-    }
-    if(whereIs.includes('yellow')){
-        whereTo = "green"
-    }
-    if(whereIs.includes('green')){
-        whereTo = "red"
-    }
-    place(whereIs[0] + whereTo, topC, bottomC);
+function yellowF(oldid, whereIs, topC, bottomC) {
+    place(whereIs[0] + "yellow", topC, bottomC);
+    remove(oldid);
+}
+
+function greenF(oldid, whereIs, topC, bottomC) {
+    place(whereIs[0] + "green", topC, bottomC);
     remove(oldid);
 }
 
@@ -207,6 +230,7 @@ function remove(oldid){
     elementToRemove.remove();
     }
     count();
+    setsetFigures();
 }
 
 function isIn(item, list) {
@@ -217,14 +241,15 @@ function count(){
     GRcount = Gred.childElementCount;
     GYcount = Gyellow.childElementCount;
     GGcount = Ggreen.childElementCount;
-    Gcount = (-1 * (GRcount - 1)) + (1 * (GYcount - 1)) + (3 * (GGcount - 1));
+    Gcount = (-1 * (GRcount - 2)) + (1 * (GYcount - 2)) + (3 * (GGcount - 2));
     GenralC.innerHTML = ("points = " + Gcount);
     // console.log("GLAD: " + Gcount); 
 }
 
 function startToStart(){
     start.style.backgroundColor = "lime";
-    start.innerHTML = "start";
+    startL.innerHTML = "start";
+    startS.innerHTML = "▸";
     start.style.color = "white";
 }
 
@@ -332,3 +357,140 @@ document.addEventListener("DOMContentLoaded", () => {
         drawPieTimer();
     };
 });
+
+function setsetFigures() {
+    setFigures("Mred");
+    setFigures("Myellow");
+    setFigures("Mgreen");
+    setFigures("Gred");
+    setFigures("Gyellow");
+    setFigures("Ggreen");
+    TOTAL = 0;
+    for(i = 0; i < FIGURES.length; i++){
+        TOTAL += (FIGURES[i].length / 3);
+    }
+}
+
+function setFigures(sectionId) {
+    jabba = document.getElementById(sectionId);
+    if (!jabba) {
+        // console.warn("No section found for:", sectionId);
+        return;
+    }
+
+    tempA = jabba.querySelectorAll("figure");
+
+    if (sectionId === "Gred") { FIGURES[0] = tempA; }
+    if (sectionId === "Gyellow") { FIGURES[1] = tempA; }
+    if (sectionId === "Ggreen") { FIGURES[2] = tempA; }
+}
+
+RredE.addEventListener("click", function(){
+    EXPAND[0][1] = toggleBool(3, "RredE", EXPAND[0][1]);
+    hide(EXPAND[0][0]);
+});
+
+RyellowE.addEventListener("click", function(){
+    EXPAND[1][1] = toggleBool(4, "RyellowE", EXPAND[1][1]);
+    hide(EXPAND[1][0]);
+});
+
+RgreenE.addEventListener("click", function(){
+    EXPAND[2][1] = toggleBool(5, "RgreenE", EXPAND[2][1]);
+    hide(EXPAND[2][0]);
+});
+
+
+function toggleBool(number, el, current){
+    el = document.getElementById(el);
+    if(current){
+        el.innerHTML= "expand";
+        return(false);
+    }
+    else{
+        el.innerHTML= "shrink";
+        return(true);
+    }
+}
+
+function hide(location){
+    section = null;
+    sectionID = null;
+    if(typeof location == "object"){
+        section = location;
+        sectionID = location.id;
+    }
+    else{
+        sectionID = location
+        section = document.getElementById(location);
+    }
+
+    if (!section) {
+        console.warn("Section not found:", location);
+    }
+
+    sectionN = findSection(sectionID);
+    // console.log("location = " + typeof(location) + " " + location);    
+    // console.log("sectionN = " + typeof(sectionN) + " " + sectionN);
+    // console.log(EXPAND[sectionN][1]);
+
+    if(EXPAND[sectionN][1] == true){
+        for(i = 0; i < (FIGURES[sectionN].length - 2); i++){
+            fig = FIGURES[sectionN][i];
+            if(fig.classList.contains("hide")){
+                fig.classList.toggle("hide");
+            }
+            if(fig.classList.contains("outter")){
+                fig.classList.remove("outter");
+                fig.classList.add("outterH");
+            }
+
+            newID = document.getElementById(fig.id + "out");
+            if (newID) {
+                if(newID.classList.contains("out")){
+                    newID.classList.remove("out");
+                    newID.classList.add("outH");
+                }
+            }
+        }
+    }
+    else {
+        if((FIGURES[sectionN].length - 2) > 1){
+            temp = FIGURES[sectionN][0].id;
+            for(i = 1; i < (FIGURES[sectionN].length - 2); i++){
+                if(FIGURES[sectionN][i].id > FIGURES[sectionN][i - 1].id){
+                    temp = FIGURES[sectionN][i].id;
+                }
+            }
+            for(i = 0; i < (FIGURES[sectionN].length - 2); i++) {
+                fig = FIGURES[sectionN][i];
+                if(fig.classList.contains("outterH")){
+                    fig.classList.add("outter");
+                    fig.classList.remove("outterH");
+                }
+
+                newID = document.getElementById(fig.id + "out");
+                if (newID) {
+                    if(newID.classList.contains("outH")){
+                        newID.classList.add("out");
+                        newID.classList.remove("outH");
+                    }
+                }
+
+
+                if (fig.classList.contains("outter") && !fig.classList.contains("hide") && fig.id != temp) {
+                    fig.classList.add("hide");
+                }
+                if(fig.id == temp && fig.classList.contains("hide")){
+                    fig.classList.add("hide");
+                }
+            }
+        }
+    }
+}
+
+function findSection(location){
+    if (location === "Gred") { return(0); }
+    if (location === "Gyellow") { return(1); }
+    if (location === "Ggreen") { return(2); }
+}

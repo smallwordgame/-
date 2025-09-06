@@ -31,7 +31,8 @@ POINTSG = [];
 start.addEventListener("click", function(){
     if(PAUSE){
         start.style.backgroundColor = "yellow";
-        start.innerHTML = "pause";
+        startL.innerHTML = "pause";
+        startS.innerHTML = "⏸";
         start.style.color = "black";
         PAUSE = false;
         // woosh.play();
@@ -294,7 +295,8 @@ function count(){
 
 function startToStart(){
     start.style.backgroundColor = "lime";
-    start.innerHTML = "start";
+    startL.innerHTML = "start";
+    startS.innerHTML = "▸";
     start.style.color = "white";
 }
 
@@ -434,7 +436,7 @@ function setsetFigures() {
     setFigures("Gyellow");
     setFigures("Ggreen");
     TOTAL = 0;
-    for(i = 0; i < 6; i++){
+    for(i = 0; i < FIGURES.length; i++){
         TOTAL += (FIGURES[i].length / 3);
     }
 }
@@ -442,7 +444,7 @@ function setsetFigures() {
 function setFigures(sectionId) {
     jabba = document.getElementById(sectionId);
     if (!jabba) {
-        console.warn("No section found for:", sectionId);
+        // console.warn("No section found for:", sectionId);
         return;
     }
 
@@ -556,8 +558,6 @@ function hide(location){
                 }
 
                 newID = document.getElementById(fig.id + "out");
-                console.log("fig = " + typeof(fig)+ " " + fig);
-                console.log("nedID = " + typeof(newID)+ " " + newID);
                 if (newID) {
                     if(newID.classList.contains("outH")){
                         newID.classList.add("out");
